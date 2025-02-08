@@ -1,6 +1,5 @@
 "use client"
-import { useState } from 'react';
-import { Star, Grid2X2, List, ShoppingCart, Heart, Search } from 'lucide-react';
+import { Star, ShoppingCart, Heart, Search } from 'lucide-react';
 import Image from 'next/image';
 
 // Define types
@@ -19,9 +18,6 @@ interface Product {
 }
 
 const ShopPage = () => {
-  const [viewMode, setViewMode] = useState('grid');
-  const [sortBy, setSortBy] = useState('best-match');
-
   const products: Product[] = [
     {
       id: 1,

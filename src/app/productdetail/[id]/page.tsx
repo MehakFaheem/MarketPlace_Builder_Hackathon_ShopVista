@@ -9,26 +9,16 @@ import { use } from 'react';
 import Link from 'next/link';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { ProductDetailProps } from '@/app/types/product';
+import { ProductDetailProps, Product } from '@/app/types/product';
 
-interface Product {
-    _id: string;
-    name: string;
-    image: any;
-    price: string;
-    description?: string;
-    discountPercentage?: number;
-    stockLevel: number;
-    category: string;
-}
 const ProductDetail = ({ params }: ProductDetailProps) => {
     const resolvedParams = use(params);
-    const [product, setProduct] = useState<any>(null);
-    const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
-    const [selectedImage, setSelectedImage] = useState(0);
-    const [loading, setLoading] = useState(true);
-    const [isInWishlist, setIsInWishlist] = useState(false);
-    const [isClient, setIsClient] = useState(false);
+    const [product, setProduct] = useState<Product | null>(null);
+    const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
+    const [selectedImage, setSelectedImage] = useState<number>(0);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [isInWishlist, setIsInWishlist] = useState<boolean>(false);
+    const [isClient, setIsClient] = useState<boolean>(false);
     const { 
         addToCart, 
         addToWishlist, 
@@ -48,12 +38,12 @@ const ProductDetail = ({ params }: ProductDetailProps) => {
         const fetchProductAndRelated = async () => {
             try {
                 const query = `*[_type == "product" && _id == $id][0]`;
-                const data = await client.fetch(query, { id: resolvedParams.id });
+                const data: Product = await client.fetch(query, { id: resolvedParams.id });
                 setProduct(data);
 
                 // Fetch related products based on category
                 const relatedQuery = `*[_type == "product" && category == $category && _id != $id][0..3]`;
-                const relatedData = await client.fetch(relatedQuery, { category: data.category, id: resolvedParams.id });
+                const relatedData: Product[] = await client.fetch(relatedQuery, { category: data.category, id: resolvedParams.id });
                 setRelatedProducts(relatedData);
 
                 if (isClient) {
@@ -70,17 +60,19 @@ const ProductDetail = ({ params }: ProductDetailProps) => {
     }, [resolvedParams.id, wishlist, isClient]);
 
     const handleWishlist = () => {
-        if (isInWishlist) {
-            removeFromWishlist(product._id);
-            setIsInWishlist(false);
-        } else {
-            addToWishlist(product);
-            setIsInWishlist(true);
+        if (product) {
+            if (isInWishlist) {
+                removeFromWishlist(product._id);
+                setIsInWishlist(false);
+            } else {
+                addToWishlist(product);
+                setIsInWishlist(true);
+            }
         }
     };
 
     const handleAddToCart = () => {
-        if (product.stockLevel > 0) {
+        if (product && product.stockLevel > 0) {
             addToCart(product);
         }
     };
