@@ -22,12 +22,12 @@ const ShoppingCart = () => {
             <nav className="text-sm mb-4">
               <ol className="flex items-center space-x-2">
                 <li>
-                  <Link href="/" className="text-black hover:text-gray-800">
+                  <Link href="/home" className="text-black hover:text-gray-800">
                     Home •
                   </Link>
                 </li>
                 <li>
-                  <Link href="/pages" className="text-black hover:text-gray-800">
+                  <Link href="/cart" className="text-black hover:text-gray-800">
                     Pages •
                   </Link>
                 </li>

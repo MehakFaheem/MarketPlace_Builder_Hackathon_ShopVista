@@ -17,7 +17,7 @@ const ContactSection = () => {
           <div className="mb-8">
             <nav className="text-sm mb-4">
               <ol className="flex items-center space-x-2">
-                <li><a href="/" className="text-black hover:text-gray-800">Home •</a></li>
+                <li><a href="/home" className="text-black hover:text-gray-800">Home •</a></li>
                 <li><a href="/page" className="text-black hover:text-gray-800">Pages •</a></li>
                 <li><a href="/page" className="text-pink-700 hover:text-gray-800">Contact Us</a></li>
               </ol>

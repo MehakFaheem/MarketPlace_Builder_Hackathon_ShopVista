@@ -1,11 +1,7 @@
 'use client'
-import { useState, useEffect } from "react";
-import { CiMail } from "react-icons/ci";
-import { FaPhoneVolume } from "react-icons/fa6";
-import { FaShoppingCart } from "react-icons/fa";
-import { CiHeart } from "react-icons/ci";
-import { CiUser } from "react-icons/ci";
-import { FaSearch } from "react-icons/fa";
+import { useState, useEffect, useRef } from "react";
+import { CiMail, CiHeart, CiUser } from "react-icons/ci";
+import { FaPhoneVolume, FaShoppingCart, FaSearch, FaChevronDown } from "react-icons/fa";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { client } from "../../sanity/lib/client";
@@ -13,12 +9,14 @@ import { client } from "../../sanity/lib/client";
 function Header() {
   const [searchTerm, setSearchTerm] = useState('');
   const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLLIElement>(null);
   const router = useRouter();
 
   useEffect(() => {
     const fetchSuggestions = async () => {
-      try {
-        if (searchTerm.trim()) {
+      if (searchTerm.trim()) {
+        try {
           const suggestionQuery = `*[_type == "product" && (
             name match "${searchTerm}*" || 
             description match "${searchTerm}*" || 
@@ -29,16 +27,28 @@ function Header() {
           }`;
           const data = await client.fetch(suggestionQuery);
           setSuggestions(data);
-        } else {
-          setSuggestions([]);
+        } catch (error) {
+          console.error("Error fetching suggestions:", error);
         }
-      } catch (error) {
-        console.error("Error fetching suggestions:", error);
+      } else {
+        setSuggestions([]);
       }
     };
 
     fetchSuggestions();
   }, [searchTerm]);
+
+  useEffect(() => {
+    // Close dropdown if clicked outside
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,14 +67,12 @@ function Header() {
     <div>
       {/* Topbar */}
       <div className="bg-purple-700 text-white flex justify-between items-center px-4 py-2 text-xs">
-        {/* Email and Phone */}
         <div className="flex items-center space-x-3">
           <CiMail className="text-sm" />
-          <span>mhhasanul@gmail.com</span>
+          <span>mehak@gmail.com</span>
           <FaPhoneVolume className="text-sm" />
           <span>(12345)67890</span>
         </div>
-        {/* Right Options */}
         <div className="flex items-center space-x-2">
           <Link href="/language" className="hover:underline">English</Link>
           <Link href="/currency" className="hover:underline">USD</Link>
@@ -77,39 +85,46 @@ function Header() {
           </Link>
         </div>
       </div>
+
       {/* Navbar */}
       <nav className="bg-white shadow-md">
         <div className="container mx-auto px-6 py-3 flex justify-between items-center">
           <Link href="/" className="text-2xl font-bold text-blue-950">
             ShopVista
           </Link>
+
           <ul className="hidden md:flex space-x-6 text-gray-700 font-medium">
-            <li>
-              <Link href="/" className="hover:text-purple-700 text-pink-500">
-                Home
-              </Link>
+            {/* Home with Dropdown */}
+            <li className="relative" ref={dropdownRef}>
+              <button 
+                className="hover:text-pink-500 flex items-center gap-1" 
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              >
+                Home <FaChevronDown className="text-sm" />
+              </button>
+
+              {isDropdownOpen && (
+                <div className="absolute left-0 mt-2 w-40 bg-white shadow-lg border rounded-md z-20">
+                  <Link href="/faq" className="block px-4 py-2 hover:bg-gray-100">FAQ</Link>
+                  <Link href="/products" className="block px-4 py-2 hover:bg-gray-100">Products</Link>
+                  <Link href="/cart" className="block px-4 py-2 hover:bg-gray-100">Shopping Cart</Link>
+                  <Link href="/generalinfo" className="block px-4 py-2 hover:bg-gray-100">General Info</Link>
+                  <Link href="/leftsidebar" className="block px-4 py-2 hover:bg-gray-100">Left Side Bar</Link>
+                  <Link href="/shops" className="block px-4 py-2 hover:bg-gray-100">Shops</Link>
+
+                </div>
+              )}
             </li>
-            <li>
-              <Link href="/pages" className="hover:text-purple-700">
-                Pages
-              </Link>
-            </li>
-            <li>
-              <Link href="/products" className="hover:text-purple-700">
-                Products
-              </Link>
-            </li>
-            <li>
-              <Link href="/blog" className="hover:text-purple-700">
-                Blog
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" className="hover:text-purple-700">
-                Contact
-              </Link>
-            </li>
+
+            <li><Link href="/about" className="hover:text-pink-500">About Us</Link></li>
+            <li><Link href="/products" className="hover:text-pink-500">Products</Link></li>
+            <li><Link href="/blogs" className="hover:text-pink-500">Blog</Link></li>
+            <li><Link href="/contact" className="hover:text-pink-500">Contact</Link></li>
+            <li><Link href="/login" className="hover:text-pink-500">Login</Link></li>
+
           </ul>
+
+          {/* Search Bar */}
           <form onSubmit={handleSearch} className="relative w-full max-w-md">
             <input
               type="text"
@@ -135,7 +150,7 @@ function Header() {
               type="submit"
               className='bg-pink-600 px-2 py-1.5 text-white absolute top-1/2 right-2 -translate-y-1/2'
             >
-              <FaSearch/>
+              <FaSearch />
             </button>
           </form>
         </div> 

@@ -7,15 +7,9 @@ import { useCart } from '../../context/CartContext';
 import { Star, Heart, ShoppingCart } from 'lucide-react';
 import { use } from 'react';
 import Link from 'next/link';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-
-
-interface ProductDetailProps {
-    params: Promise<{
-        id: string;
-    }>;
-}
+import { ProductDetailProps } from '@/app/types/product';
 
 const ProductDetail = ({ params }: ProductDetailProps) => {
     const resolvedParams = use(params);

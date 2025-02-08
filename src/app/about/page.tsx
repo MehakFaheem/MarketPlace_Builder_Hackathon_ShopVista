@@ -7,13 +7,13 @@ const AboutPage = () => {
       {/* Breadcrumb */}
       <section className='bg-rose-50'>
         <div className='p-12 mx-36'>
-          <h1 className="font-bold text-blue-950 text-[26px]">Order Completed</h1>
+          <h1 className="font-bold text-blue-950 text-[26px]">About Us</h1>
           <div className="mb-8">
             <nav className="text-sm mb-4">
               <ol className="flex items-center space-x-2">
-                <li><a href="/" className="text-black hover:text-gray-800">Home •</a></li>
-                <li><a href="/page" className="text-black hover:text-gray-800">Pages •</a></li>
-                <li><a href="/page" className="text-pink-700 hover:text-gray-800">Order Completed</a></li>
+                <li><a href="/home" className="text-black hover:text-gray-800">Home •</a></li>
+                <li><a href="/about" className="text-black hover:text-gray-800">Pages •</a></li>
+                <li><a href="/about" className="text-pink-700 hover:text-gray-800">About Us</a></li>
               </ol>
             </nav>
           </div>

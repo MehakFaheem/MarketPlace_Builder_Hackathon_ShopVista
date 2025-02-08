@@ -6,19 +6,8 @@ import { client } from "../../sanity/lib/client";
 import { urlFor } from "../../sanity/lib/image";
 import { ShoppingCart, Heart, ChevronLeft, ChevronRight } from "lucide-react";
 import { useCart } from '../context/CartContext';
-
-// Types
-interface Product {
-  _id: string;
-  name: string;
-  image: any;
-  price: string;
-  description?: string;
-  discountPercentage?: number;
-  stockLevel: number;
-  category: string;
-}
-
+import { Product } from "../types/product";
+  
 const productsQuery = `*[_type == "product"] {
   _id,
   name,

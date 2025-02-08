@@ -77,17 +77,21 @@ const RatingStars = ({ rating }: { rating: number }) => (
 const ShopList = () => {
   return (
     <div className="max-w-6xl mx-44 p-14">
-      {/* Header */}
-      <h1 className="text-2xl font-bold text-blue-950">Shop List</h1>
+      {/* Breadcrumb */}
+      <section className='bg-rose-50'>
+      <div className='p-12 mx-36'>
+      <h1 className="font-bold text-blue-950 text-[26px]">Shops</h1>
       <div className="mb-8">
         <nav className="text-sm mb-4">
           <ol className="flex items-center space-x-2">
-            <li><a href="/" className="text-black hover:text-gray-800">Home•</a></li>
-            <li><a href="/page" className="text-black hover:text-gray-800">Page•</a></li>
-            <li><a href="/page" className="text-pink-700 hover:text-gray-800">Shop Grid Default</a></li>
+            <li><a href="/home" className="text-black hover:text-gray-800">Home •</a></li>
+            <li><a href="/shops" className="text-black hover:text-gray-800">Pages •</a></li>
+            <li><a href="/shops" className="text-pink-700 hover:text-gray-800">Shops</a></li>
           </ol>
         </nav>
       </div>
+      </div>
+      </section>
 
       {/* Filter Bar */}
       {/* <div className="flex justify-between items-center mb-6 pb-4 border-b"> */}

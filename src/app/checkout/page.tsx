@@ -5,15 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from '../context/CartContext';
 import { CreateCustomerInSanity, CreateOrderInSanity } from '../actions/CheckOut';
-
-interface FormData {
-  name: string;
-  email: string;
-  phone: string;
-  address: string;
-  city: string;
-  postalCode: string;
-}
+import { FormData } from '../types/product';
 
 const CheckoutForm = () => {
   const router = useRouter();
@@ -68,15 +60,20 @@ const CheckoutForm = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <section className='bg-rose-50 text-blue-950'>
-        <div className='p-12 mx-36'>
-          <h1 className="font-bold text-[26px]">Checkout</h1>
-          <nav className="text-sm mb-4">
-            <ol className="flex items-center space-x-2">
-              <li><Link href="/" className="hover:text-gray-800">Home</Link> / Checkout</li>
-            </ol>
-          </nav>
-        </div>
+        {/* Breadcrumb */}
+        <section className='bg-rose-50'>
+      <div className='p-12 mx-36'>
+      <h1 className="font-bold text-blue-950 text-[26px]">Checkout</h1>
+      <div className="mb-8">
+        <nav className="text-sm mb-4">
+          <ol className="flex items-center space-x-2">
+            <li><a href="/home" className="text-black hover:text-gray-800">Home •</a></li>
+            <li><a href="/checkout" className="text-black hover:text-gray-800">Pages •</a></li>
+            <li><a href="/checkout" className="text-pink-700 hover:text-gray-800">Checkout</a></li>
+          </ol>
+        </nav>
+      </div>
+      </div>
       </section>
 
       <form onSubmit={handleSubmit} className="flex flex-col lg:flex-row gap-8 mx-48 my-12">

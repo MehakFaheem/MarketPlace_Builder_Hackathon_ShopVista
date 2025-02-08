@@ -56,13 +56,13 @@ const BlogEcommerce = () => {
        {/* Breadcrumb */}
        <section className='bg-rose-50'>
       <div className='p-12 mx-36'>
-      <h1 className="font-bold text-blue-950 text-[26px]">Blog Page</h1>
+      <h1 className="font-bold text-blue-950 text-[26px]">Our Blogs</h1>
       <div className="mb-8">
         <nav className="text-sm mb-4">
           <ol className="flex items-center space-x-2">
-            <li><a href="/" className="text-black hover:text-gray-800">Home •</a></li>
-            <li><a href="/page" className="text-black hover:text-gray-800">Pages •</a></li>
-            <li><a href="/page" className="text-pink-700 hover:text-gray-800">Blog Page</a></li>
+            <li><a href="/home" className="text-black hover:text-gray-800">Home •</a></li>
+            <li><a href="/blogs" className="text-black hover:text-gray-800">Pages •</a></li>
+            <li><a href="/blogs" className="text-pink-700 hover:text-gray-800">Blog Page</a></li>
           </ol>
         </nav>
       </div>

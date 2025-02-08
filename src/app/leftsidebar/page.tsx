@@ -38,7 +38,7 @@ const ShopPage = () => {
       price: 26.00,
       salePrice: 22.00,
       rating: 5,
-      image: "/images/leftsidebar2.jpeg",  // Fixed path
+      image: "/images/leftsidebar2.jpeg",  
       colors: ['#FF0000', '#00FF00', '#0000FF']
     },
     {
@@ -47,7 +47,7 @@ const ShopPage = () => {
       price: 26.00,
       salePrice: 22.00,
       rating: 5,
-      image: "/images/leftsidebar3.jpeg",  // Fixed path
+      image: "/images/leftsidebar3.jpeg",  
       colors: ['#FF0000', '#00FF00', '#0000FF']
     },
     {
@@ -56,7 +56,7 @@ const ShopPage = () => {
       price: 26.00,
       salePrice: 22.00,
       rating: 5,
-      image: "/images/leftsidebar4.jpeg",  // Fixed path
+      image: "/images/leftsidebar4.jpeg",  
       colors: ['#FF0000', '#00FF00', '#0000FF']
     },
     {
@@ -65,7 +65,7 @@ const ShopPage = () => {
       price: 26.00,
       salePrice: 22.00,
       rating: 5,
-      image: "/images/leftsidebar5.jpeg",  // Fixed path
+      image: "/images/leftsidebar5.jpeg",  
       colors: ['#FF0000', '#00FF00', '#0000FF']
     },
     {
@@ -74,7 +74,7 @@ const ShopPage = () => {
       price: 26.00,
       salePrice: 22.00,
       rating: 5,
-      image: "/images/leftsidebar6.jpeg",  // Fixed path
+      image: "/images/leftsidebar6.jpeg",  
       colors: ['#FF0000', '#00FF00', '#0000FF']
     },
     {
@@ -83,7 +83,7 @@ const ShopPage = () => {
       price: 26.00,
       salePrice: 22.00,
       rating: 5,
-      image: "/images/leftsidebar7.jpeg",  // Fixed path
+      image: "/images/leftsidebar7.jpeg",  
       colors: ['#FF0000', '#00FF00', '#0000FF']
     },
   ];
@@ -140,18 +140,22 @@ const ShopPage = () => {
 
   return (
     <div className="max-w-6xl mx-44 p-14">
-      {/* Header */}
-      <h1 className="text-2xl font-bold text-blue-950">Shop Left Sidebar</h1>
+        {/* Breadcrumb */}
+        <section className='bg-rose-50'>
+      <div className='p-12 mx-36'>
+      <h1 className="font-bold text-blue-950 text-[26px]">Left SideBar</h1>
       <div className="mb-8">
         <nav className="text-sm mb-4">
           <ol className="flex items-center space-x-2">
-            <li><a href="/" className="text-black hover:text-gray-800">Home•</a></li>
-            <li><a href="/page" className="text-black hover:text-gray-800">Page•</a></li>
-            <li><a href="/page" className="text-pink-700 hover:text-gray-800">Shop Left Sidebar</a></li>
+            <li><a href="/home" className="text-black hover:text-gray-800">Home •</a></li>
+            <li><a href="/leftsidebar" className="text-black hover:text-gray-800">Pages •</a></li>
+            <li><a href="/leftsidebar" className="text-pink-700 hover:text-gray-800">Left side bar</a></li>
           </ol>
         </nav>
       </div>
-
+      </div>
+      </section>
+      
       {/* Filter Bar */}
       <div className="container mx-auto px-4 py-12">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
