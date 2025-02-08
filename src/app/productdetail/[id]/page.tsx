@@ -1,5 +1,5 @@
 'use client';
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { client } from '../../../sanity/lib/client';
 import { urlFor } from '../../../sanity/lib/image';
@@ -11,6 +11,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ProductDetailProps } from '@/app/types/product';
 
+interface Product {
+    _id: string;
+    name: string;
+    image: any;
+    price: string;
+    description?: string;
+    discountPercentage?: number;
+    stockLevel: number;
+    category: string;
+}
 const ProductDetail = ({ params }: ProductDetailProps) => {
     const resolvedParams = use(params);
     const [product, setProduct] = useState<any>(null);
