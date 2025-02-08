@@ -1,11 +1,11 @@
 // app/checkout/page.tsx
 'use client';
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from '../context/CartContext';
 import { CreateCustomerInSanity, CreateOrderInSanity } from '../actions/CheckOut';
 import { FormData } from '../types/product';
+import Link from 'next/link';
 
 const CheckoutForm = () => {
   const router = useRouter();
@@ -46,7 +46,7 @@ const CheckoutForm = () => {
         price: parseFloat(item.price)
       }));
   
-      const orderResponse = await CreateOrderInSanity(sanitizedCart, customerResponse._id);
+      // const orderResponse = await CreateOrderInSanity(sanitizedCart, customerResponse._id);
       
       clearCart();
       router.push(`/order-confirmation`);
@@ -67,10 +67,10 @@ const CheckoutForm = () => {
       <div className="mb-8">
         <nav className="text-sm mb-4">
           <ol className="flex items-center space-x-2">
-            <li><a href="/home" className="text-black hover:text-gray-800">Home •</a></li>
-            <li><a href="/checkout" className="text-black hover:text-gray-800">Pages •</a></li>
-            <li><a href="/checkout" className="text-pink-700 hover:text-gray-800">Checkout</a></li>
-          </ol>
+            <Link href="/home" className="text-black hover:text-gray-800">Home •</Link>
+            <Link href="/checkout" className="text-black hover:text-gray-800">Pages •</Link>
+            <Link href="/checkout" className="text-pink-700 hover:text-gray-800">Checkout</Link>
+           </ol>
         </nav>
       </div>
       </div>

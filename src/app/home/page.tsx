@@ -1,3 +1,12 @@
+// import HomeContent from "@/app/pages/HomeContent";
+
+// export default function Home() {
+//     return (
+//         <div>
+//             <HomeContent />
+//         </div>
+//     );
+// };
 'use client';
 import React from "react";
 import Image from "next/image";
@@ -10,7 +19,7 @@ const HomeContent = () => {
       <section className="bg-purple-50 flex flex-col lg:flex-row items-center px-8 lg:px-20 py-12 relative">
         {/* Lamp Holder Image */}
         <div className="absolute top-0 left-6 hidden lg:block z-10">
-          <Image src="/images/black.png" alt="Lamp Holder" width={300} height={300} />
+          <Image src="/black.png" alt="Lamp Holder" width={300} height={300} />
         </div>
 
         {/* Text Section */}
@@ -33,7 +42,7 @@ const HomeContent = () => {
         <div className="lg:w-1/2 flex justify-center mt-10 lg:mt-0 relative">
           <div className="relative">
             <Image
-              src="/images/pinkchair.png"
+              src="/pinkchair.png"
               alt="PinkChair"
               width={400}
               height={400}
@@ -72,7 +81,7 @@ const HomeContent = () => {
           {/* Card 2 */}
           <div className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300 ease-in-out top-1105 left-376">
             <img
-              src="/images/2whiteimg.png"
+              src="2whiteimg.png"
               alt="Product 2"
               className="w-full h-48 object-cover"
             />
@@ -86,7 +95,7 @@ const HomeContent = () => {
           {/* Card 3 */}
           <div className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300 ease-in-out top-1105 left-376">
             <img
-              src="/images/skyblueimg.png"
+              src="skyblueimg.png"
               alt="Product 3"
               className="w-full h-48 object-cover"
             />
@@ -100,7 +109,7 @@ const HomeContent = () => {
           {/* Card 4 */}
           <div className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300 ease-in-out top-1105 left-376">
             <img
-              src="/images/3whiteimg.png"
+              src="3whiteimg.png"
               alt="Product 4"
               className="w-full h-48 object-cover"
             />
@@ -132,12 +141,12 @@ const HomeContent = () => {
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 px-10">
     {/* Product Cards */}
     {[
-      { img: "/images/brown.png", name: "Comfort Handy Craft", price: "$42.00", price2: "$60.00" },
-      { img: "/images/yellow.png", name: "Comfort Handy Craft", price: "$42.00", price2: "$60.00" },
-      { img: "/images/white.png", name: "Comfort Handy Craft", price: "$42.00", price2: "$60.00" },
-      { img: "/images/sofa.png", name: "Comfort Handy Craft", price: "$42.00", price2: "$60.00" },
-      { img: "/images/blacksofa.png", name: "Comfort Handy Craft", price: "$42.00", price2: "$60.00" },
-      { img: "/images/3whiteimg.png", name: "Comfort Handy Craft", price: "$42.00", price2: "$60.00" },
+      { img: "brown.png", name: "Comfort Handy Craft", price: "$42.00", price2: "$60.00" },
+      { img: "yellow.png", name: "Comfort Handy Craft", price: "$42.00", price2: "$60.00" },
+      { img: "white.png", name: "Comfort Handy Craft", price: "$42.00", price2: "$60.00" },
+      { img: "sofa.png", name: "Comfort Handy Craft", price: "$42.00", price2: "$60.00" },
+      { img: "blacksofa.png", name: "Comfort Handy Craft", price: "$42.00", price2: "$60.00" },
+      { img: "3whiteimg.png", name: "Comfort Handy Craft", price: "$42.00", price2: "$60.00" },
     ].map((product, index) => (
       <div key={index} className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300 ease-in-out">
         <img src={product.img} alt={product.name} className="w-full h-[200px] object-contain" />
@@ -163,7 +172,7 @@ const HomeContent = () => {
         {/* Card 1 */}
         <div className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300 p-6 text-center">
             <Image
-                src="/images/1.png"
+                src="/1.png"
                 alt="24/7 Support"
                 width={65}
                 height={65}
@@ -178,7 +187,7 @@ const HomeContent = () => {
         {/* Card 2 */}
         <div className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300 p-6 text-center">
             <Image
-                src="/images/2.png"
+                src="/2.png"
                 alt="24/7 Support"
                 width={65}
                 height={65}
@@ -193,7 +202,7 @@ const HomeContent = () => {
         {/* Card 3 */}
         <div className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300 p-6 text-center">
             <Image
-                src="/images/3.png"
+                src="/3.png"
                 alt="24/7 Support"
                 width={65}
                 height={65}
@@ -208,7 +217,7 @@ const HomeContent = () => {
         {/* Card 4 */}
         <div className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300 p-6 text-center">
             <Image
-                src="/images/4.png"
+                src="/4.png"
                 alt="24/7 Support"
                 width={65}
                 height={65}
@@ -228,7 +237,7 @@ const HomeContent = () => {
     <div className="relative w-full md:w-1/2">
       <div className="absolute inset-0 bg-pink-200 rounded-full opacity-20"></div>
       <img 
-        src="/images/trending.png" 
+        src="/trending.png" 
         alt="B&B Italian Sofa" 
         className="relative z-10 w-full h-auto"
       />
@@ -274,7 +283,7 @@ const HomeContent = () => {
         <div className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300">
             <div className="bg-purple-50 p-4">
                 <Image
-                    src="/images/trendingproducts1.png"
+                    src="/trendingproducts1.png"
                     alt="Cantilever chair"
                     width={140}
                     height={140}
@@ -294,7 +303,7 @@ const HomeContent = () => {
         <div className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300">
             <div className="bg-purple-50 p-4">
                 <Image
-                    src="/images/trendingproducts2.png"
+                    src="/trendingproducts2.png"
                     alt="Cantilever chair"
                     width={140}
                     height={140}
@@ -314,7 +323,7 @@ const HomeContent = () => {
         <div className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300">
             <div className="bg-purple-50 p-4">
                 <Image
-                    src="/images/trendingproducts3.png"
+                    src="/trendingproducts3.png"
                     alt="Cantilever chair"
                     width={200}
                     height={200}
@@ -334,7 +343,7 @@ const HomeContent = () => {
         <div className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300">
             <div className="bg-purple-50 p-4">
                 <Image
-                    src="/images/trendingproducts4.png"
+                    src="/trendingproducts4.png"
                     alt="Cantilever chair"
                     width={200}
                     height={200}
@@ -358,7 +367,7 @@ const HomeContent = () => {
             <a href="#" className="text-pink-500 hover:text-pink-600 text-sm">Shop Now</a>
             <div className="flex justify-center p-4">
               <img 
-                src="/images/trendingproducts5.png" 
+                src="trendingproducts5.png" 
                 alt="Black Clock" 
                 className="w-48 h-48 object-contain"
               />
@@ -371,7 +380,7 @@ const HomeContent = () => {
             <a href="#" className="text-pink-500 hover:text-pink-600 text-sm">View Collection</a>
             <div className="flex justify-center p-4">
               <img 
-                src="/images/trendingproducts6.png" 
+                src="trendingproducts6.png" 
                 alt="TV Console" 
                 className="w-full h-full object-contain"
               />
@@ -381,7 +390,7 @@ const HomeContent = () => {
     <div className="bg-white p-6 rounded-lg space-y-4">
   <div className="flex items-center space-x-4">
     <img 
-      src="/images/trendingproducts7.png" 
+      src="trendingproducts7.png" 
       alt="trendingproducts7" 
       className="w-20 h-20 object-contain"
     />
@@ -394,7 +403,7 @@ const HomeContent = () => {
   {/* Second Chair */}
   <div className="flex items-center space-x-4">
     <img 
-      src="/images/trendingproducts8.png" 
+      src="trendingproducts8.png" 
       alt="Executive Chair 2" 
       className="w-20 h-20 object-contain"
     />
@@ -407,7 +416,7 @@ const HomeContent = () => {
   {/* Third Chair */}
   <div className="flex items-center space-x-4">
     <img 
-      src="/images/trendingproducts9.png" 
+      src="trendingproducts9.png" 
       alt="Executive Chair 3" 
       className="w-20 h-20 object-contain"
     />
@@ -485,7 +494,7 @@ const HomeContent = () => {
     <div className="relative">
       <div className="absolute inset-0 bg-pink-100 rounded-full"></div>
       <img 
-        src="/images/discountitem.png" 
+        src="discountitem.png" 
         alt="Eams Sofa Compact" 
         className="relative z-10 w-full h-auto"
       />
@@ -505,7 +514,7 @@ const HomeContent = () => {
     <div className="relative group">
       <div className="bg-gray-50 rounded-full p-8 relative overflow-hidden">
         <img 
-          src="/images/topcategories.png" 
+          src="topcategories.png" 
           alt="Mini LCW Chair" 
           className="w-full h-auto relative z-10"
         />
@@ -524,7 +533,7 @@ const HomeContent = () => {
     <div className="relative group">
       <div className="bg-gray-50 rounded-full p-8 relative overflow-hidden">
         <img 
-          src="/images/whiteimg.png" 
+          src="whiteimg.png" 
           alt="Mini LCW Chair" 
           className="w-full h-auto relative z-10"
         />
@@ -542,7 +551,7 @@ const HomeContent = () => {
     <div className="relative group">
       <div className="bg-gray-50 rounded-full p-8 relative overflow-hidden">
         <img 
-          src="/images/trendingproducts1.png" 
+          src="trendingproducts1.png" 
           alt="Mini LCW Chair" 
           className="w-full h-auto relative z-10"
         />
@@ -560,7 +569,7 @@ const HomeContent = () => {
     <div className="relative group">
       <div className="bg-gray-50 rounded-full p-8 relative overflow-hidden">
         <img 
-          src="/images/topcategories.png" 
+          src="topcategories.png" 
           alt="Mini LCW Chair" 
           className="w-full h-auto relative z-10"
         />
@@ -590,7 +599,7 @@ const HomeContent = () => {
   {/* Background Image Container */}
   <div className="absolute inset-0">
     <img 
-      src="/images/subscribe.jpg"
+      src="subscribe.jpg"
       alt="Newsletter background"
       className="w-full h-full object-cover"
     />
@@ -616,7 +625,7 @@ const HomeContent = () => {
     {/* Brand Logos */}
     <div className="h-400 w-full">
       <img 
-        src="/images/brands.png"
+        src="brands.png"
         alt="brands"
         className="h-400 w-400"
       />
@@ -634,7 +643,7 @@ const HomeContent = () => {
         {/* Blog 1 */}
         <div className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300">
             <Image
-                src="/images/latestblog.jpg"
+                src="/latestblog.jpg"
                 alt="Blog 1"
                 width={400}
                 height={300}
@@ -658,7 +667,7 @@ const HomeContent = () => {
         {/* Blog 2 */}
         <div className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300">
             <Image
-                src="/images/latestblog2.jpg"
+                src="/latestblog2.jpg"
                 alt="Blog 2"
                 width={400}
                 height={300}
@@ -682,7 +691,7 @@ const HomeContent = () => {
         {/* Blog 3 */}
         <div className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300">
             <Image
-                src="/images/latestblog3.jpg"
+                src="/latestblog3.jpg"
                 alt="Blog 3"
                 width={400}
                 height={300}

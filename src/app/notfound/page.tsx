@@ -12,9 +12,9 @@ const NotFound = () => {
       <div className="mb-8">
         <nav className="text-sm mb-4">
           <ol className="flex items-center space-x-2">
-            <li><a href="/home" className="text-black hover:text-gray-800">Home •</a></li>
-            <li><a href="/notfound" className="text-black hover:text-gray-800">Pages •</a></li>
-            <li><a href="/notfound" className="text-pink-700 hover:text-gray-800">Not Found</a></li>
+            <Link href="/home" className="text-black hover:text-gray-800">Home •</Link>
+            <Link href="/notfound" className="text-black hover:text-gray-800">Pages •</Link>
+            <Link href="/notfound" className="text-pink-700 hover:text-gray-800">Not Found</Link>
           </ol>
         </nav>
       </div>
@@ -41,7 +41,7 @@ const NotFound = () => {
 
         {/* Back to Home Button */}
         <Link 
-          href="/"
+          href="/home"
           className="inline-block px-6 py-3 bg-pink-500 text-white rounded-md hover:bg-pink-600 transition-colors duration-200"
         >
           Back To Home

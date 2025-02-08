@@ -1,11 +1,26 @@
 import React from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 
-// You should place this file at: app/post/[id]/page.tsx
-const BlogPost = ({}) => {
-  // This is mock data - in a real app, you'd fetch this based on the post ID
-  const post = {
+interface BlogPost {
+  id: number;
+  title: string;
+  content: string;
+  image: string;
+  date: string;
+  author: string;
+  tags: string[];
+}
+
+interface Product {
+  id: number;
+  name: string;
+  price: string;
+  image: string;
+  rating: number;
+}
+
+const BlogPost = () => {
+  const post: BlogPost = {
     id: 1,
     title: "Mauris et orci non vulputate diam tincidunt nec",
     content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec ante gravida lectus molestie tincidunt. Curabitur tempor tellus eget libero ultrices, a tincidunt lorem pulvinar. Sed vitae erat ut neque ultricies ultrices.
@@ -17,7 +32,7 @@ const BlogPost = ({}) => {
     tags: ["General", "Design", "Tech"]
   };
 
-  const recentProducts = [
+  const recentProducts: Product[] = [
     { id: 1, name: "Queen sofa", price: "$350.00", image: "/images/sofa.jpeg", rating: 5 },
     { id: 2, name: "Eutipque sofa", price: "$700.00", image: "/images/sneaker.jpeg", rating: 4 },
     { id: 3, name: "A plain", price: "$199.00", image: "/images/tshirt.jpeg", rating: 5 },
@@ -26,9 +41,7 @@ const BlogPost = ({}) => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      {/* Main article content */}
       <div className="flex flex-col lg:flex-row gap-8">
-        {/* Left column - Main content */}
         <div className="lg:w-2/3">
           <div className="mb-8">
             <Image
@@ -52,13 +65,13 @@ const BlogPost = ({}) => {
             <p className="text-gray-700 leading-relaxed mb-6">{post.content}</p>
           </div>
 
-          {/* Video section */}
           <div className="grid grid-cols-2 gap-4 my-8">
             <div className="relative h-48">
               <Image
                 src="/images/video-thumb1.jpeg"
                 alt="Video thumbnail"
-                fill
+                width={400}
+                height={192}
                 className="object-cover rounded-lg"
               />
               <button className="absolute inset-0 flex items-center justify-center">
@@ -71,13 +84,13 @@ const BlogPost = ({}) => {
               <Image
                 src="/images/video-thumb2.jpeg"
                 alt="Video thumbnail"
-                fill
+                width={400}
+                height={192}
                 className="object-cover rounded-lg"
               />
             </div>
           </div>
 
-          {/* Tags */}
           <div className="mt-8">
             <h3 className="text-lg font-semibold mb-3">Tags</h3>
             <div className="flex gap-2">
@@ -92,11 +105,9 @@ const BlogPost = ({}) => {
             </div>
           </div>
 
-          {/* Comments section */}
           <div className="mt-12">
             <h3 className="text-xl font-semibold mb-6">Comments</h3>
             <div className="space-y-6">
-              {/* Comment form */}
               <form className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <input
@@ -126,9 +137,7 @@ const BlogPost = ({}) => {
           </div>
         </div>
 
-        {/* Right column - Sidebar */}
         <div className="lg:w-1/3">
-          {/* Recent Products */}
           <div className="mb-8">
             <h3 className="text-xl font-semibold mb-4">Recent Products</h3>
             <div className="grid grid-cols-2 gap-4">
@@ -138,7 +147,8 @@ const BlogPost = ({}) => {
                     <Image
                       src={product.image}
                       alt={product.name}
-                      fill
+                      width={160}
+                      height={128}
                       className="object-cover rounded-lg"
                     />
                   </div>
@@ -152,7 +162,6 @@ const BlogPost = ({}) => {
             </div>
           </div>
 
-          {/* Follow section */}
           <div className="mb-8">
             <h3 className="text-xl font-semibold mb-4">Follow</h3>
             <div className="flex gap-4">

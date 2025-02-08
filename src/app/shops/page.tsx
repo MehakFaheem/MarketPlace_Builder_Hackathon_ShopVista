@@ -2,8 +2,24 @@
 import React from 'react';
 import { Star, Heart, ShoppingCart } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
-const products = [
+// Define TypeScript interfaces
+interface Product {
+  id: number;
+  title: string;
+  price: string;
+  rating: number;
+  image: string;
+  description: string;
+}
+
+interface RatingStarsProps {
+  rating: number;
+  className?: string;
+}
+
+const products: Product[] = [
   {
     id: 1,
     title: "Awesome furniture",
@@ -62,115 +78,114 @@ const products = [
   }
 ];
 
-const RatingStars = ({ rating }: { rating: number }) => (
-  <div className="flex">
+const RatingStars: React.FC<RatingStarsProps> = ({ rating, className = "" }) => (
+  <div className={`flex ${className}`}>
     {[...Array(5)].map((_, index) => (
       <Star
         key={index}
         size={16}
+        aria-hidden="true"
         className={index < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}
       />
     ))}
+    <span className="sr-only">{rating} out of 5 stars</span>
   </div>
 );
 
-const ShopList = () => {
+const ShopList: React.FC = () => {
   return (
-    <div className="max-w-6xl mx-44 p-14">
+    <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Breadcrumb */}
-      <section className='bg-rose-50'>
-      <div className='p-12 mx-36'>
-      <h1 className="font-bold text-blue-950 text-[26px]">Shops</h1>
-      <div className="mb-8">
-        <nav className="text-sm mb-4">
-          <ol className="flex items-center space-x-2">
-            <li><a href="/home" className="text-black hover:text-gray-800">Home •</a></li>
-            <li><a href="/shops" className="text-black hover:text-gray-800">Pages •</a></li>
-            <li><a href="/shops" className="text-pink-700 hover:text-gray-800">Shops</a></li>
-          </ol>
-        </nav>
-      </div>
-      </div>
+      <section className="bg-rose-50 mb-8">
+        <div className="py-8 px-4 sm:px-6 lg:px-8">
+          <h1 className="font-bold text-blue-950 text-2xl mb-4">Shops</h1>
+          <nav aria-label="Breadcrumb">
+            <ol className="flex items-center space-x-2 text-sm">
+              <li><Link href="/home" className="text-black hover:text-gray-800">Home</Link><span className="mx-2">•</span></li>
+              <li><Link href="/shops" className="text-black hover:text-gray-800">Pages</Link><span className="mx-2">•</span></li>
+              <li><Link href="/shops" className="text-pink-700 hover:text-gray-800" aria-current="page">Shops</Link></li>
+            </ol>
+          </nav>
+        </div>
       </section>
 
-      {/* Filter Bar */}
-      {/* <div className="flex justify-between items-center mb-6 pb-4 border-b"> */}
-        <div className="container mx-auto px-4 py-12">
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-                    <h3 className="text-blue-950">Ecommerce Accesories & Fashion item</h3>
-                    <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
-                        <div className="flex items-center gap-2">
-                            <span>Per Page:</span>
-                            <select className="border rounded px-2 py-1">
-                                <option>12</option>
-                                <option>24</option>
-                                <option>36</option>
-                            </select>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <span>Sort By:</span>
-                            <select className="border rounded px-2 py-1">
-                                <option>Best Match</option>
-                                <option>Price: Low to High</option>
-                                <option>Price: High to Low</option>
-                            </select>
-                        </div>
-                        <span>View:</span>
-                    </div>
-                </div>
-                </div>
-      {/* </div> */}
+      {/* Filter Section */}
+      <section className="mb-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <h2 className="text-blue-950 text-xl">Ecommerce Accessories & Fashion Items</h2>
+          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
+            <div className="flex items-center gap-2">
+              <label htmlFor="per-page">Per Page:</label>
+              <select id="per-page" className="border rounded px-2 py-1">
+                <option>12</option>
+                <option>24</option>
+                <option>36</option>
+              </select>
+            </div>
+            <div className="flex items-center gap-2">
+              <label htmlFor="sort-by">Sort By:</label>
+              <select id="sort-by" className="border rounded px-2 py-1">
+                <option>Best Match</option>
+                <option>Price: Low to High</option>
+                <option>Price: High to Low</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Product List */}
-      <div className="space-y-6">
+      <section className="space-y-6">
         {products.map((product) => (
-          <div key={product.id} className="flex flex-col md:flex-row gap-6 p-4 bg-white rounded-lg shadow-sm">
+          <article key={product.id} className="flex flex-col md:flex-row gap-6 p-4 bg-white rounded-lg shadow-sm">
             <div className="w-full md:w-48 h-48 relative">
-              <img
+              <Image
                 src={product.image}
                 alt={product.title}
-                className="w-full h-full object-cover rounded-lg"
+                fill
+                className="object-cover rounded-lg"
+                sizes="(max-width: 768px) 100vw, 192px"
               />
             </div>
             <div className="flex-grow">
               <div className="flex justify-between items-start mb-2">
-                <h2 className="text-lg font-semibold">{product.title}</h2>
+                <h3 className="text-lg font-semibold">{product.title}</h3>
                 <span className="text-purple-600 font-bold">{product.price}</span>
               </div>
-              <div className="mb-2">
-                <RatingStars rating={product.rating} />
-              </div>
+              <RatingStars rating={product.rating} className="mb-2" />
               <p className="text-gray-600 text-sm mb-4">{product.description}</p>
               <div className="flex items-center space-x-4">
-                <button className="p-2 text-gray-500 hover:text-purple-600">
+                <button
+                  className="p-2 text-gray-500 hover:text-purple-600"
+                  aria-label="Add to wishlist"
+                >
                   <Heart size={20} />
                 </button>
-                <button className="p-2 text-gray-500 hover:text-purple-600">
+                <button
+                  className="p-2 text-gray-500 hover:text-purple-600"
+                  aria-label="Add to cart"
+                >
                   <ShoppingCart size={20} />
                 </button>
               </div>
             </div>
-          </div>
+          </article>
         ))}
-      </div>
-        {/* Brands Section */}
-        <section>
-        <div className="max-w-6xl mx-auto py-10 px-44">
-        <div>
-            {/* Brand Logos */}
-            <div className="h-400 w-full">
-            <Image
+      </section>
+
+      {/* Brands Section */}
+      <section className="py-10">
+        <div className="max-w-6xl mx-auto">
+          <Image
             src="/images/brands.png"
-            alt="brands"
-            width= {800}
-            height={800 }
-            className="h-400 w-400"
-            />
-            </div>
+            alt="Brand logos"
+            width={800}
+            height={400}
+            className="w-full h-auto"
+          />
         </div>
-        </div>
-        </section>
-    </div>
+      </section>
+    </main>
   );
 };
 

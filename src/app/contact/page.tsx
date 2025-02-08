@@ -1,139 +1,137 @@
-"use client"
-import React from 'react';
-import Image from 'next/image';
+'use client';
+
+import { useState, ChangeEvent, FormEvent } from 'react';
+import Link from 'next/link';
+
+interface FormData {
+  name: string;
+  subject: string;
+  message: string;
+}
 
 const ContactSection = () => {
-  const handleSubmit = (e: any) => {
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    subject: '',
+    message: ''
+  });
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Add your form submission logic here
+    alert(
+      `Message Sent!\nName: ${formData.name}\nSubject: ${formData.subject}\nMessage: ${formData.message}`
+    );
+    setFormData({ name: '', subject: '', message: '' });
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Breadcrumb Section */}
-      <section className='bg-rose-50'>
-        <div className='p-12 mx-44 max-w-7xl'>
-          <h1 className="font-bold text-blue-950 text-[26px]">Contact Us</h1>
+    <div className="container mx-auto px-4 py-12 flex flex-col md:flex-row gap-8">
+      {/* Breadcrumb */}
+      <section className="bg-rose-50 w-full">
+        <div className="p-12 mx-auto max-w-7xl">
+          <h1 className="font-bold text-blue-950 text-[26px]">FAQ</h1>
           <div className="mb-8">
             <nav className="text-sm mb-4">
               <ol className="flex items-center space-x-2">
-                <li><a href="/home" className="text-black hover:text-gray-800">Home •</a></li>
-                <li><a href="/page" className="text-black hover:text-gray-800">Pages •</a></li>
-                <li><a href="/page" className="text-pink-700 hover:text-gray-800">Contact Us</a></li>
+                <li>
+                  <Link href="/" className="text-black hover:text-gray-800">
+                    Home •
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/pages" className="text-black hover:text-gray-800">
+                    Pages •
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/faq" className="text-pink-700 hover:text-gray-800">
+                    FAQ
+                  </Link>
+                </li>
               </ol>
             </nav>
           </div>
         </div>
       </section>
 
-      {/* Main Content Section */}
-      <div className="container mx-44 px-4 py-16 max-w-7xl">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          {/* Left Section */}
-          <div className="space-y-12">
-            {/* Top Section with Information and Contact Way */}
-            <div>
-              <div className="flex flex-col md:flex-row md:justify-between md:items-start">
-                <div className="space-y-4 md:w-1/2">
-                  <h2 className="text-2xl font-bold text-blue-900">Information About us</h2>
-                  <p className="text-gray-600 leading-relaxed pr-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis neque ultrices 
-                    tristique amet erat vitae eget dolor los vitae lobortis quis bibendum quam.
-                  </p>
-                  <div className="flex gap-2 mt-4">
-                    <div className="w-3 h-3 rounded-full bg-blue-600"></div>
-                    <div className="w-3 h-3 rounded-full bg-pink-500"></div>
-                    <div className="w-3 h-3 rounded-full bg-teal-400"></div>
-                  </div>
-                </div>
-
-                <div className="space-y-4 md:w-1/2 mt-8 md:mt-0">
-                  <h2 className="text-2xl font-bold text-blue-900">Contact Way</h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="flex items-start gap-4">
-                      <div className="w-3 h-3 mt-2 rounded-full bg-blue-600"></div>
-                      <div>
-                        <p className="text-gray-600">Tel: 877-67-88-99</p>
-                        <p className="text-blue-600">E-Mail: shop@store.com</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-4">
-                      <div className="w-3 h-3 mt-2 rounded-full bg-pink-500"></div>
-                      <div>
-                        <p className="text-gray-600">Support Forum</p>
-                        <p className="text-pink-500">For over 24hr</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-4">
-                      <div className="w-3 h-3 mt-2 rounded-full bg-orange-400"></div>
-                      <div>
-                        <p className="text-gray-600">20 Margaret st, London</p>
-                        <p className="text-orange-400">Great Britain, 3NM98-LK</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-4">
-                      <div className="w-3 h-3 mt-2 rounded-full bg-green-400"></div>
-                      <div>
-                        <p className="text-gray-600">Free standard shipping</p>
-                        <p className="text-green-400">on all orders</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Get In Touch Form */}
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-blue-900">Get In Touch</h2>
-              <p className="text-gray-600">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis neque ultrices tristique amet erat vitae eget dolor.
-              </p>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder="Your Name"
-                    className="w-full p-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Your E-mail"
-                    className="w-full p-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                <input
-                  type="text"
-                  placeholder="Subject"
-                  className="w-full p-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <textarea
-                  placeholder="Type Your Message"
-                  rows={4}
-                  className="w-full p-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                ></textarea>
-                <button
-                  type="submit"
-                  className="bg-pink-500 text-white px-8 py-3 rounded-md hover:bg-pink-600 transition duration-300"
-                >
-                  Send Mail
-                </button>
-              </form>
-            </div>
+      {/* General Information Section */}
+      <div className="md:w-1/2">
+        <h2 className="text-2xl font-bold text-indigo-700 mb-4">
+          General Information
+        </h2>
+        <div className="space-y-4">
+          <div>
+            <h3 className="font-semibold">
+              Eu dictumst cum et vel euismod condimentum?
+            </h3>
+            <p className="text-gray-600">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
           </div>
-
-          {/* Right Section - Illustration */}
-          <div className="flex items-center justify-center lg:pt-20">
-            <Image
-              src="/images/contactus.png"
-              alt="Contact illustration"
-              width={300}
-              height={300}
-              className="max-w-2xl"
-              priority
-            />
+          <div>
+            <h3 className="font-semibold">Massa blandit est fermentum orci.</h3>
+            <p className="text-gray-600">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold">
+              Odio malesuada fusc est consectetur scelerisque?
+            </h3>
+            <p className="text-gray-600">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
           </div>
         </div>
+      </div>
+
+      {/* Contact Form Section */}
+      <div className="md:w-1/2 bg-gray-100 p-6 rounded-lg shadow-lg">
+        <h2 className="text-xl font-bold mb-4">Ask a Question</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Name*"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+          <input
+            type="text"
+            name="subject"
+            placeholder="Subject*"
+            value={formData.subject}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+          <textarea
+            name="message"
+            placeholder="Type Your Message*"
+            value={formData.message}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            rows={4}
+          />
+          <button
+            type="submit"
+            className="w-full bg-pink-600 text-white p-3 rounded-md hover:bg-pink-700"
+          >
+            Send Mail
+          </button>
+        </form>
       </div>
     </div>
   );

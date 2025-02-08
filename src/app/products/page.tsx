@@ -7,6 +7,9 @@ import { urlFor } from "../../sanity/lib/image";
 import { ShoppingCart, Heart, ChevronLeft, ChevronRight } from "lucide-react";
 import { useCart } from '../context/CartContext';
 import { Product } from "../types/product";
+
+// Define type for sort options
+type SortOption = 'bestMatch' | 'priceLowToHigh' | 'priceHighToLow';
   
 const productsQuery = `*[_type == "product"] {
   _id,
@@ -28,13 +31,13 @@ const ProductPage = () => {
     // Pagination and Sorting States
     const [currentPage, setCurrentPage] = useState(1);
     const [productsPerPage, setProductsPerPage] = useState(12);
-    const [sortOption, setSortOption] = useState('bestMatch');
+    const [sortOption, setSortOption] = useState<SortOption>('bestMatch');
 
     useEffect(() => {
         setIsClient(true);
         const fetchProducts = async () => {
             try {
-                const data = await client.fetch(productsQuery);
+                const data = await client.fetch<Product[]>(productsQuery);
                 setProducts(data);
                 setLoading(false);
             } catch (error) {
@@ -48,7 +51,7 @@ const ProductPage = () => {
 
     // Sorting and Pagination Logic
     const sortedProducts = useMemo(() => {
-        let sorted = [...products];
+        const sorted = [...products];
         switch(sortOption) {
             case 'priceLowToHigh':
                 return sorted.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
@@ -164,7 +167,7 @@ const ProductPage = () => {
                                 <select 
                                     value={sortOption}
                                     onChange={(e) => {
-                                        setSortOption(e.target.value);
+                                        setSortOption(e.target.value as SortOption);
                                         setCurrentPage(1);
                                     }}
                                     className="border rounded px-2 py-1"
@@ -202,13 +205,14 @@ const ProductPage = () => {
                                         </button>
 
                                         {/* Product Image */}
-                                        <div className="relative pt-[100%] bg-gray-100 rounded-t-lg">
+                                        <div className="relative w-full pt-[100%]">
                                             <Image 
                                                 src={urlFor(product.image).url()}
                                                 alt={product.name}
                                                 fill
                                                 className="object-contain p-4 rounded-t-lg"
                                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                priority={currentPage === 1}
                                             />
                                         </div>
 
@@ -260,14 +264,14 @@ const ProductPage = () => {
                                 ))}
                             </div>
 
-                            {/* Pagination Controls (Responsive) */}
+                            {/* Pagination Controls */}
                             <div className="flex flex-wrap justify-center items-center mt-8 space-x-2">
                                 <button 
                                     onClick={prevPage} 
                                     disabled={currentPage === 1}
                                     className="p-2 rounded-md disabled:opacity-50 hover:bg-gray-100"
                                 >
-                                    <ChevronLeft />
+                                    <ChevronLeft className="h-5 w-5" />
                                 </button>
                                 {[...Array(totalPages)].map((_, index) => (
                                     <button
@@ -287,7 +291,7 @@ const ProductPage = () => {
                                     disabled={currentPage === totalPages}
                                     className="p-2 rounded-md disabled:opacity-50 hover:bg-gray-100"
                                 >
-                                    <ChevronRight />
+                                    <ChevronRight className="h-5 w-5" />
                                 </button>
                             </div>
                         </>
@@ -301,9 +305,11 @@ const ProductPage = () => {
                     <div className="relative h-[200px] w-full">
                         <Image
                             src="/images/brands.png"
-                            alt="brands"
+                            alt="Brands"
                             fill
                             className="object-contain"
+                            priority={false}
+                            sizes="(max-width: 1280px) 100vw, 1280px"
                         />
                     </div>
                 </div>

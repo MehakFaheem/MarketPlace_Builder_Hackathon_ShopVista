@@ -1,4 +1,5 @@
 'use client'
+
 import { useState, useEffect, useRef } from "react";
 import { CiMail, CiHeart, CiUser } from "react-icons/ci";
 import { FaPhoneVolume, FaShoppingCart, FaSearch, FaChevronDown } from "react-icons/fa";
@@ -6,9 +7,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { client } from "../../sanity/lib/client";
 
+interface ProductSuggestion {
+  _id: string;
+  name: string;
+}
+
 function Header() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [suggestions, setSuggestions] = useState<ProductSuggestion[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLLIElement>(null);
   const router = useRouter();
@@ -25,7 +31,7 @@ function Header() {
             _id,
             name
           }`;
-          const data = await client.fetch(suggestionQuery);
+          const data = await client.fetch<ProductSuggestion[]>(suggestionQuery);
           setSuggestions(data);
         } catch (error) {
           console.error("Error fetching suggestions:", error);
@@ -39,7 +45,6 @@ function Header() {
   }, [searchTerm]);
 
   useEffect(() => {
-    // Close dropdown if clicked outside
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsDropdownOpen(false);
@@ -50,7 +55,7 @@ function Header() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (searchTerm.trim()) {
       router.push(`/searchresult?query=${encodeURIComponent(searchTerm.trim())}`);
@@ -58,7 +63,7 @@ function Header() {
     }
   };
 
-  const handleSuggestionClick = (suggestion: any) => {
+  const handleSuggestionClick = (suggestion: ProductSuggestion) => {
     setSearchTerm(suggestion.name);
     router.push(`/searchresult?query=${encodeURIComponent(suggestion.name)}`);
   };
@@ -111,7 +116,6 @@ function Header() {
                   <Link href="/generalinfo" className="block px-4 py-2 hover:bg-gray-100">General Info</Link>
                   <Link href="/leftsidebar" className="block px-4 py-2 hover:bg-gray-100">Left Side Bar</Link>
                   <Link href="/shops" className="block px-4 py-2 hover:bg-gray-100">Shops</Link>
-
                 </div>
               )}
             </li>
@@ -121,7 +125,6 @@ function Header() {
             <li><Link href="/blogs" className="hover:text-pink-500">Blog</Link></li>
             <li><Link href="/contact" className="hover:text-pink-500">Contact</Link></li>
             <li><Link href="/login" className="hover:text-pink-500">Login</Link></li>
-
           </ul>
 
           {/* Search Bar */}
@@ -148,7 +151,7 @@ function Header() {
             )}
             <button 
               type="submit"
-              className='bg-pink-600 px-2 py-1.5 text-white absolute top-1/2 right-2 -translate-y-1/2'
+              className="bg-pink-600 px-2 py-1.5 text-white absolute top-1/2 right-2 -translate-y-1/2"
             >
               <FaSearch />
             </button>

@@ -1,6 +1,7 @@
 "use client"
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const BlogEcommerce = () => {
   const blogPosts = [
@@ -76,7 +77,7 @@ const BlogEcommerce = () => {
           {/* Blog Posts */}
           {blogPosts.map((post) => (
             <article key={post.id} className="mb-12">
-              <img
+              <Image
                 src={post.image}
                 alt={post.title}
                 className="w-full h-64 object-cover rounded-lg mb-4"
@@ -135,7 +136,7 @@ const BlogEcommerce = () => {
             <div className="space-y-4">
               {blogPosts.map((post) => (
                 <div key={post.id} className="flex gap-4">
-                  <img
+                  <Image
                     src={post.image}
                     alt={post.title}
                     className="w-20 h-20 object-cover rounded"
@@ -156,7 +157,7 @@ const BlogEcommerce = () => {
             <div className="grid grid-cols-2 gap-4">
               {products.map((product) => (
                 <div key={product.id} className="text-center">
-                  <img
+                  <Image
                     src={product.image}
                     alt={product.name}
                     className="w-full h-32 object-cover rounded mb-2"

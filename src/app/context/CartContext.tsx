@@ -1,12 +1,13 @@
 'use client';
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface CartItem {
   _id: string;
   name: string;
-  image: any;
+  image: string; // Changed from 'any' to 'string' for better type safety
   price: string;
-  description?: string;  // Add this line
+  description?: string;
   color?: string;
   size?: string;
   quantity: number;
@@ -19,15 +20,20 @@ interface NotificationType {
   type: 'success' | 'error';
 }
 
+// Define a proper Product type
+interface Product extends Omit<CartItem, 'quantity'> {
+  quantity?: number;
+}
+
 interface CartContextType {
   cart: CartItem[];
-  addToCart: (product: any) => void;
+  addToCart: (product: Product) => void;
   updateQuantity: (id: string, newQuantity: number) => void;
   clearCart: () => void;
   cartTotal: number;
   notification: NotificationType;
   setNotification: React.Dispatch<React.SetStateAction<NotificationType>>;
-  addToWishlist: (product: any) => void;
+  addToWishlist: (product: Product) => void;
   wishlist: CartItem[];
   removeFromWishlist: (id: string) => void;
 }
@@ -45,17 +51,25 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const savedCart = localStorage.getItem('cart');
-      const savedWishlist = localStorage.getItem('wishlist');
-      if (savedCart) setCart(JSON.parse(savedCart));
-      if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
+      try {
+        const savedCart = localStorage.getItem('cart');
+        const savedWishlist = localStorage.getItem('wishlist');
+        if (savedCart) setCart(JSON.parse(savedCart));
+        if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
+      } catch (error) {
+        console.error('Error loading data from localStorage:', error);
+      }
     }
   }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('cart', JSON.stringify(cart));
-      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      try {
+        localStorage.setItem('cart', JSON.stringify(cart));
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      } catch (error) {
+        console.error('Error saving data to localStorage:', error);
+      }
     }
   }, [cart, wishlist]);
 
@@ -66,29 +80,30 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }, 3000);
   };
 
-  const addToCart = (product: any) => {
+  const addToCart = (product: Product) => {
     try {
-      console.log('Product being added:', product);
       setCart((prevCart) => {
-        console.log('Current cart state:', prevCart);
         const existingItem = prevCart.find((item) => item._id === product._id);
-        const newCart = existingItem
-          ? prevCart.map((item) =>
-              item._id === product._id ? { ...item, quantity: item.quantity + 1 } : item
-            )
-          : [
-              ...prevCart,
-              {
-                ...product,
-                quantity: 1,
-                color: product.color || 'Default',
-                size: product.size || 'M',
-                discountPercentage: product.discountPercentage || 0,
-              },
-            ];
-        console.log('New cart state:', newCart);
-        return newCart;
+        
+        if (existingItem) {
+          return prevCart.map((item) =>
+            item._id === product._id 
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          );
+        }
+
+        const newItem: CartItem = {
+          ...product,
+          quantity: 1,
+          color: product.color || 'Default',
+          size: product.size || 'M',
+          discountPercentage: product.discountPercentage || 0,
+        };
+
+        return [...prevCart, newItem];
       });
+      showNotification('Product added to cart');
     } catch (error) {
       console.error('Error adding to cart:', error);
       showNotification('Failed to add product to cart', 'error');
@@ -100,12 +115,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       setCart((prevCart) =>
         prevCart
           .map((item) =>
-            item._id === id ? { ...item, quantity: Math.max(0, newQuantity) } : item
+            item._id === id 
+              ? { ...item, quantity: Math.max(0, newQuantity) }
+              : item
           )
           .filter((item) => item.quantity > 0)
       );
       showNotification('Cart updated successfully');
     } catch (error) {
+      console.error('Error updating quantity:', error);
       showNotification('Failed to update cart', 'error');
     }
   };
@@ -115,20 +133,26 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       setCart([]);
       showNotification('Cart cleared successfully');
     } catch (error) {
+      console.error('Error clearing cart:', error);
       showNotification('Failed to clear cart', 'error');
     }
   };
 
-  const addToWishlist = (product: any) => {
+  const addToWishlist = (product: Product) => {
     try {
       const existingItem = wishlist.find((item) => item._id === product._id);
       if (!existingItem) {
-        setWishlist([...wishlist, { ...product, quantity: 1 }]);
+        const wishlistItem: CartItem = {
+          ...product,
+          quantity: 1,
+        };
+        setWishlist([...wishlist, wishlistItem]);
         showNotification('Product added to wishlist');
       } else {
         showNotification('Product already in wishlist');
       }
     } catch (error) {
+      console.error('Error adding to wishlist:', error);
       showNotification('Failed to add to wishlist', 'error');
     }
   };
@@ -138,6 +162,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       setWishlist((prevWishlist) => prevWishlist.filter((item) => item._id !== id));
       showNotification('Product removed from wishlist');
     } catch (error) {
+      console.error('Error removing from wishlist:', error);
       showNotification('Failed to remove from wishlist', 'error');
     }
   };

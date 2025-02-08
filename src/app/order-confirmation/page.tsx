@@ -2,6 +2,7 @@
 import React from 'react';
 import { Clock, CheckCircle, Receipt } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const OrderCompleted = () => {
   return (
@@ -13,10 +14,10 @@ const OrderCompleted = () => {
       <div className="mb-8">
         <nav className="text-sm mb-4">
           <ol className="flex items-center space-x-2">
-            <li><a href="/home" className="text-black hover:text-gray-800">Home •</a></li>
-            <li><a href="/order-confirmation" className="text-black hover:text-gray-800">Pages •</a></li>
-            <li><a href="/order-confirmation" className="text-pink-700 hover:text-gray-800">Order Completed</a></li>
-          </ol>
+            <Link href="/home" className="text-black hover:text-gray-800">Home •</Link>
+            <Link href="/order-confirmation" className="text-black hover:text-gray-800">Pages •</Link>
+            <Link href="/order-confirmation" className="text-pink-700 hover:text-gray-800">Order Completed</Link>
+           </ol>
         </nav>
       </div>
       </div>
