@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { client } from "../../sanity/lib/client"; 
@@ -9,23 +9,31 @@ import { useCart } from '../context/CartContext';
 import { useSearchParams } from 'next/navigation';
 
 interface Product {
-  _id: string;
-  name: string;
-  image: any; // Changed from string to any for Sanity images
-  price: string;
-  description?: string;
-  discountPercentage?: number;
-  stockLevel: number;
-  category: string;
+    _id: string;
+    name: string;
+    image: any;
+    price: string;
+    description?: string;
+    discountPercentage?: number;
+    stockLevel: number;
+    category: string;
 }
 
-const SearchResultsPage = () => {
+// Loading component
+const LoadingSpinner = () => (
+    <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+    </div>
+);
+
+// Search Results Content Component
+const SearchResultsContent = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
     const [isClient, setIsClient] = useState(false);
     const { addToCart, cart, addToWishlist, wishlist } = useCart();
     const searchParams = useSearchParams();
-    const query = searchParams.get('query')?.trim() || '';  // Ensuring query is not null
+    const query = searchParams.get('query')?.trim() || '';
 
     useEffect(() => {
         setIsClient(true);
@@ -126,7 +134,6 @@ const SearchResultsPage = () => {
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                             {products.map((product) => (
                                 <div key={product._id} className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow flex flex-col h-full relative">
-                                    {/* Wishlist Button */}
                                     <button
                                         onClick={() => addToWishlist(product)}
                                         className="absolute top-2 right-2 z-10 p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow"
@@ -137,10 +144,9 @@ const SearchResultsPage = () => {
                                         />
                                     </button>
 
-                                    {/* Product Image */}
                                     <div className="relative pt-[100%] bg-gray-100 rounded-t-lg">
                                         <Image 
-                                            src={urlFor(product.image).url()} // Ensured image type compatibility
+                                            src={urlFor(product.image).url()}
                                             alt={product.name}
                                             fill
                                             className="object-contain p-4 rounded-t-lg"
@@ -148,7 +154,6 @@ const SearchResultsPage = () => {
                                         />
                                     </div>
 
-                                    {/* Product Details */}
                                     <div className="p-4 flex flex-col flex-grow">
                                         <h4 className="font-semibold text-purple-600 text-center">{product.name}</h4>
                                         <p className="text-sm text-gray-600 mt-2 text-center flex-grow">{product.description}</p>
@@ -189,6 +194,15 @@ const SearchResultsPage = () => {
                 </div>
             </section>
         </div>
+    );
+};
+
+// Main component with Suspense
+const SearchResultsPage = () => {
+    return (
+        <Suspense fallback={<LoadingSpinner />}>
+            <SearchResultsContent />
+        </Suspense>
     );
 };
 
