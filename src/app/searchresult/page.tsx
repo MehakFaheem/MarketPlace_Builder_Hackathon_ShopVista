@@ -11,7 +11,7 @@ import { useSearchParams } from 'next/navigation';
 interface Product {
   _id: string;
   name: string;
-  image: any;
+  image: string;
   price: string;
   description?: string;
   discountPercentage?: number;

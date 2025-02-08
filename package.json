@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build": "next build && next lint --max-warnings=0"
+
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.2",
