@@ -37,12 +37,12 @@ const ProductDetail = ({ params }: ProductDetailProps) => {
     useEffect(() => {
         const fetchProductAndRelated = async () => {
             try {
-                const query = *[_type == "product" && _id == $id][0];
+                const query = `*[_type == "product" && _id == $id][0]`;
                 const data = await client.fetch(query, { id: resolvedParams.id });
                 setProduct(data);
 
                 // Fetch related products based on category
-                const relatedQuery = *[_type == "product" && category == $category && _id != $id][0..3];
+                const relatedQuery = `*[_type == "product" && category == $category && _id != $id][0..3]`;
                 const relatedData = await client.fetch(relatedQuery, { category: data.category, id: resolvedParams.id });
                 setRelatedProducts(relatedData);
 
@@ -148,7 +148,7 @@ const ProductDetail = ({ params }: ProductDetailProps) => {
                                     <div className="relative w-full h-full">
                                         <Image
                                             src={urlFor(img).url()}
-                                            alt={Thumbnail ${index + 1}}
+                                            alt={`Thumbnail ${index + 1}`}
                                             fill
                                             className="object-cover p-1"
                                             sizes="(max-width: 768px) 80px, 100px"
@@ -253,7 +253,7 @@ const ProductDetail = ({ params }: ProductDetailProps) => {
                         <p>Category: <span className="text-purple-600">{product.category}</span></p>
                         <p>Tags: <span className="text-purple-600">Fashion, Style, Vintage</span></p>
                         <p>Stock Status: 
-                            <span className={ml-2 ${product.stockLevel > 0 ? 'text-green-500' : 'text-red-500'}}>
+                            <span className={`ml-2 ${product.stockLevel > 0 ? 'text-green-500' : 'text-red-500'}`}>
                                 {product.stockLevel > 0 ? 'In Stock' : 'Out of Stock'}
                             </span>
                         </p>
@@ -359,7 +359,7 @@ const ProductDetail = ({ params }: ProductDetailProps) => {
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {relatedProducts.map((relatedProduct) => (
             <div key={relatedProduct._id} className="border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow flex flex-col">
-                <Link href={/product/${relatedProduct._id}}>
+                <Link href={`/product/${relatedProduct._id}`}>
                     <div className="relative aspect-square">
                         <Image
                             src={urlFor(relatedProduct.image).url()}
@@ -376,7 +376,7 @@ const ProductDetail = ({ params }: ProductDetailProps) => {
                 </Link>
                 <div className="p-4 mt-auto flex flex-col sm:flex-row gap-2">
                     <Link 
-                        href={/productdetail/${relatedProduct._id}} 
+                        href={`/productdetail/${relatedProduct._id}`} 
                         className="w-full px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors text-center"
                     >
                         View Details
